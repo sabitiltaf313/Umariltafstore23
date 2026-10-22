@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - Umariltaf Store</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
+body{background:#0f172a;color:#fff;padding:15px;}
+h1{text-align:center;margin:15px 0;}
+.form{background:#1e293b;padding:20px;border-radius:12px;max-width:500px;margin:auto;}
+input{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:none;font-size:16px;}
+button{width:100%;padding:13px;background:#25D366;color:#fff;border:none;border-radius:8px;font-size:17px;font-weight:bold;margin-top:10px;cursor:pointer;}
+.product-list{max-width:500px;margin:20px auto;}
+.card{background:#fff;color:#000;display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;margin-bottom:10px;}
+.card img{width:60px;height:60px;object-fit:cover;border-radius:8px;}
+.card button{background:red;width:auto;padding:6px 12px;font-size:13px;margin:0;}
+.note{background:#334155;padding:12px;border-radius:8px;margin:15px auto;max-width:500px;text-align:center;font-size:14px;}
+a{color:#25D366;text-decoration:none;font-weight:bold;}
+</style>
+</head>
+<body>
+<h1>Umariltaf Store - Admin</h1>
+<div class="note">
+WhatsApp: 03105423365<br>
+Your Store: <a href="index.html">View Store</a><br>
+Is panel se product add karein, wo store par show hoga (isi mobile par)
+</div>
+
+<div class="form">
+<input type="text" id="pname" placeholder="Product Name - مثال: Smart Watch">
+<input type="text" id="pprice" placeholder="Price - مثال: 3500">
+<input type="file" id="pimage" accept="image/*">
+<button onclick="addProduct()">Add Product to Store</button>
+<button onclick="clearAll()" style="background:#475569;margin-top:8px;">Clear All Products</button>
+</div>
+
+<div class="product-list" id="list"></div>
+
+<script>
+let products = JSON.parse(localStorage.getItem('umariltaf_products') || '[]');
+
+function addProduct(){
+  const name = document.getElementById('pname').value;
+  const price = document.getElementById('pprice').value;
+  const file = document.getElementById('pimage').files[0];
+  if(!name || !price){ alert('Name aur Price likhein'); return; }
+  
+  if(file){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      saveProd(name, price, e.target.result);
+    }
+    reader.readAsDataURL(file);
+  } else {
+    saveProd(name, price, 'https://via.placeholder.com/300?text='+name);
+  }
+}
+
+function saveProd(name, price, img){
+  products.push({name, price, img, id: Date.now()});
+  localStorage.setItem('umariltaf_products', JSON.stringify(products));
+  document.getElementById('pname').value='';
+  document.getElementById('pprice').value='';
+  document.getElementById('pimage').value='';
+  showList();
+  alert('Product Add Ho Gaya! Ab Store check karein');
+}
+
+function showList(){
+  const list = document.getElementById('list');
+  list.innerHTML = '<h3 style="margin:15px 0">Added Products ('+products.length+')</h3>';
+  products.slice().reverse().forEach(p=>{
+    list.innerHTML += `<div class="card">
+      <img src="${p.img}"><div style="flex:1"><b>${p.name}</b><br>Rs. ${p.price}</div>
+      <button onclick="delProd(${p.id})">Delete</button></div>`;
+  });
+}
+
+function delProd(id){
+  products = products.filter(p=>p.id!=id);
+  localStorage.setItem('umariltaf_products', JSON.stringify(products));
+  showList();
+}
+
+function clearAll(){
+  if(confirm('Saare products delete karne hain?')){
+    localStorage.removeItem('umariltaf_products');
+    products=[];
+    showList();
+  }
+}
+showList();
+</script>
+</body>
+</html>
