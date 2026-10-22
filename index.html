@@ -1,80 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Umariltaf Store - Best Online Shopping in Peshawar</title>
+<title>ایڈمن پینل - عمر الطاف اسٹور</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-body{background:#f8fafc;}
-header{background:#000;color:#fff;padding:18px 15px;text-align:center;position:sticky;top:0;z-index:10;}
-header h1{font-size:26px;}
-header p{font-size:13px;opacity:0.7;margin-top:4px;}
-.hero{background:linear-gradient(135deg,#000 0%,#1e293b 100%);color:#fff;padding:35px 15px;text-align:center;}
-.hero h2{font-size:28px;margin-bottom:8px;}
-.hero p{opacity:0.8;margin-bottom:18px;}
-.btn{background:#25D366;color:#fff;padding:12px 28px;border-radius:30px;text-decoration:none;font-weight:bold;display:inline-block;}
-.products{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:15px;max-width:900px;margin:auto;}
-.card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);text-align:center;padding-bottom:12px;}
-.card img{width:100%;height:170px;object-fit:cover;background:#eee;}
-.card h3{font-size:15px;margin:10px 5px 4px;height:38px;overflow:hidden;}
-.card .price{color:#dc2626;font-weight:bold;font-size:16px;margin-bottom:8px;}
-.card a{background:#000;color:#fff;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:13px;display:inline-block;}
-.empty{text-align:center;grid-column:1/3;padding:40px 10px;background:#fff;border-radius:12px;}
-footer{background:#000;color:#fff;text-align:center;padding:20px;font-size:14px;margin-top:20px;}
-.float{position:fixed;bottom:20px;right:20px;background:#25D366;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff;text-decoration:none;box-shadow:0 6px 16px rgba(0,0,0,0.3);z-index:99;}
-.admin-link{position:fixed;bottom:20px;left:20px;background:#334155;color:#fff;padding:8px 12px;border-radius:20px;font-size:12px;text-decoration:none;opacity:0.5;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0f172a;color:#fff;padding:15px}
+h1{text-align:center;margin:15px 0}
+.tabs{display:flex;gap:10px;justify-content:center;margin-bottom:20px}
+.tabs button{padding:12px 20px;border:none;border-radius:25px;cursor:pointer;font-weight:bold}
+.tabs .active{background:#25D366;color:#fff}
+.tabs .inactive{background:#334155;color:#fff}
+.box{background:#1e293b;padding:15px;border-radius:12px;margin-bottom:12px}
+.box img{width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:8px}
+.box h3{font-size:15px}
+.box p{font-size:13px;opacity:.8;margin:4px 0}
+.btns{display:flex;gap:8px;margin-top:10px}
+.btns button{flex:1;padding:10px;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
+.approve{background:#22c55e;color:#fff}
+.reject{background:#ef4444;color:#fff}
+.call{background:#000;color:#fff;padding:8px 12px;border-radius:20px;text-decoration:none;display:inline-block;margin-top:6px;font-size:12px}
 </style>
 </head>
 <body>
-<header>
-<h1>Umariltaf Store</h1>
-<p>Quality Products • Peshawar • WhatsApp: 03105423365</p>
-</header>
 
-<div class="hero">
-<h2>Welcome to Umariltaf Store</h2>
-<p>بہترین کوالٹی، مناسب قیمت، پورے پاکستان میں ڈیلیوری</p>
-<a class="btn" href="https://wa.me/923105423365?text=Salam%20Umariltaf%20Store%20se%20info%20chahiye">WhatsApp Par Rabta Karein</a>
+<h1>عمر الطاف - ایڈمن پینل</h1>
+
+<div class="tabs">
+<button id="tab1" class="active" onclick="showTab('orders')">آرڈرز</button>
+<button id="tab2" class="inactive" onclick="showTab('products')">پروڈکٹس (منظوری)</button>
 </div>
 
-<div class="products" id="productGrid">
-<!-- Products yahan ayenge -->
-</div>
+<div id="ordersDiv"></div>
+<div id="productsDiv" style="display:none"></div>
 
-<footer>
-<p>© 2026 Umariltaf Store - All Rights Reserved</p>
-<p style="margin-top:6px">Call / WhatsApp: 03105423365</p>
-</footer>
-
-<a class="float" href="https://wa.me/923105423365">💬</a>
-<a class="admin-link" href="admin.html">Admin</a>
-
-<script>
-// Default products agar admin ne abhi kuch add na kiya ho
-const defaultProducts = [
-{name:"Wireless Headphones", price:"2999", img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"},
-{name:"Smart Watch", price:"3500", img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"},
-{name:"Running Shoes", price:"4200", img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},
-{name:"Winter Jacket", price:"5500", img:"https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400"}
-];
-
-let saved = JSON.parse(localStorage.getItem('umariltaf_products') || '[]');
-let allProducts = saved.length > 0 ? saved : defaultProducts;
-
-const grid = document.getElementById('productGrid');
-if(allProducts.length === 0){
-grid.innerHTML = '<div class="empty"><h3>Abhi koi product nahi</h3><p>Admin panel se product add karein</p><a href="admin.html" style="color:#25D366">Go to Admin</a></div>';
-} else {
-grid.innerHTML = allProducts.map(p=>`
-<div class="card">
-<img src="${p.img}" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">
-<h3>${p.name}</h3>
-<div class="price">Rs. ${p.price}</div>
-<a href="https://wa.me/923105423365?text=Salam%20Umariltaf%20Store,%20Mujhe%20${encodeURIComponent(p.name)}%20chahiye%20Rs.${p.price}%20wala">Order on WhatsApp</a>
-</div>
-`).join('');
-}
-</script>
-</body>
-</html>
+<script type="module">
