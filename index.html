@@ -1,38 +1,210 @@
 <!DOCTYPE html>
-<html lang="ur" dir="ltr">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ایڈمن پینل - عمر الطاف اسٹور</title>
+<title>Umar Store - Full Detail One Code</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#0f172a;color:#fff;padding:15px}
-h1{text-align:center;margin:15px 0}
-.tabs{display:flex;gap:10px;justify-content:center;margin-bottom:20px}
-.tabs button{padding:12px 20px;border:none;border-radius:25px;cursor:pointer;font-weight:bold}
-.tabs .active{background:#25D366;color:#fff}
-.tabs .inactive{background:#334155;color:#fff}
-.box{background:#1e293b;padding:15px;border-radius:12px;margin-bottom:12px}
-.box img{width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:8px}
-.box h3{font-size:15px}
-.box p{font-size:13px;opacity:.8;margin:4px 0}
-.btns{display:flex;gap:8px;margin-top:10px}
-.btns button{flex:1;padding:10px;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
-.approve{background:#22c55e;color:#fff}
-.reject{background:#ef4444;color:#fff}
-.call{background:#000;color:#fff;padding:8px 12px;border-radius:20px;text-decoration:none;display:inline-block;margin-top:6px;font-size:12px}
+*{font-family:'Poppins',sans-serif;box-sizing:border-box}
+body{margin:0;background:#f5f6fa;padding-bottom:90px}
+.header{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:15px;text-align:center;position:sticky;top:0;z-index:10}
+.card{background:#fff;margin:10px;border-radius:15px;padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.07)}
+input,select,textarea{width:100%;padding:11px;margin:5px 0;border:1.5px solid #ddd;border-radius:10px}
+button{width:100%;padding:12px;border:none;border-radius:10px;background:#667eea;color:#fff;font-weight:600;margin-top:7px;cursor:pointer}
+.btn-green{background:#27ae60}.btn-orange{background:#e67e22}.btn-red{background:#e74c3c}.btn-dark{background:#2c3e50}
+.balance{background:linear-gradient(135deg,#27ae60,#2ecc71);color:#fff;margin:10px;border-radius:15px;padding:14px}
+.small{font-size:11px;color:#666}.badge{padding:3px 8px;border-radius:12px;font-size:10px;font-weight:700}
+.badge-red{background:#ffe0e0;color:#c0392b}.badge-green{background:#e8f5e9;color:#27ae60}.badge-orange{background:#fff3cd;color:#856404}
+#authSection{min-height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#667eea,#764ba2);padding:15px}
+#storeSection{display:none}
+#withdrawBox{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:100;justify-content:center;align-items:center;padding:15px}
+.inner{background:#fff;width:100%;max-width:400px;border-radius:15px;padding:18px;max-height:90vh;overflow:auto}
+.hidden{display:none}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #eee;z-index:20}
+.bottom-nav div{text-align:center;font-size:11px;color:#667eea;width:25%;cursor:pointer}
+.detail-box{background:#f8f9fa;border-radius:10px;padding:8px;margin:5px 0;font-size:12px}
 </style>
 </head>
 <body>
 
-<h1>عمر الطاف - ایڈمن پینل</h1>
-
-<div class="tabs">
-<button id="tab1" class="active" onclick="showTab('orders')">آرڈرز</button>
-<button id="tab2" class="inactive" onclick="showTab('products')">پروڈکٹس (منظوری)</button>
+<!-- AUTH WITH FULL DETAIL -->
+<div id="authSection">
+<div class="card" style="width:100%;max-width:380px">
+<h2 style="text-align:center;margin:0">Umar Store</h2>
+<p style="text-align:center" class="small">Full Detail System | 1600-200=1400 | JazzCash</p>
+<div id="signupForm">
+<input id="s_name" placeholder="پورا نام - Full Name">
+<input id="s_phone" placeholder="لاگ ان نمبر - 03XXXXXXXXX">
+<input id="s_jazz" placeholder="JazzCash نمبر - 03XXXXXXXXX - لازمی">
+<input id="s_pass" type="password" placeholder="پاس ورڈ - Password">
+<select id="s_role"><option value="buyer">Buyer - خریدار</option><option value="seller">Seller - فروخت کنندہ</option><option value="admin">Admin - ایڈمن (آپ)</option></select>
+<button onclick="signUp()">اکاؤنٹ بنائیں - Sign Up</button>
+</div>
+<div id="loginForm" class="hidden">
+<input id="l_phone" placeholder="فون نمبر"><input id="l_pass" type="password" placeholder="پاس ورڈ"><button onclick="doLogin()">لاگ ان - Login</button>
+</div>
+<p id="status" style="text-align:center;color:red;font-size:13px"></p>
+<p onclick="toggleAuth()" id="toggleText" style="text-align:center;color:#667eea;cursor:pointer;font-size:13px">پہلے سے اکاؤنٹ ہے؟ لاگ ان</p>
+</div>
 </div>
 
-<div id="ordersDiv"></div>
-<div id="productsDiv" style="display:none"></div>
+<!-- STORE WITH FULL DETAIL -->
+<div id="storeSection">
+<div class="header"><h3 style="margin:0">Umar Affiliate Store</h3><p style="margin:2px 0 0;font-size:11px">Buyer Detail | Seller Detail | JazzCash Detail | 200 Commission Detail</p></div>
+
+<div class="balance">
+<div class="small" style="color:#fff;opacity:.9">USER FULL DETAIL</div>
+<div style="font-size:11px;line-height:18px">
+نام: <b id="d_name">-</b> | فون: <b id="d_phone">-</b><br>
+JazzCash: <b id="d_jazz">-</b> | Role: <b id="d_role">-</b><br>
+بیلنس: <b id="d_balance" style="font-size:22px">0</b> Rs | کل کمائی: <b id="d_total">0</b> Rs
+</div>
+<div style="display:flex;gap:5px;margin-top:8px">
+<button onclick="openWithdraw()" style="background:#fff;color:#27ae60;padding:8px">💸 Withdraw</button>
+<button onclick="loadHistory()" style="background:rgba(255,255,255,.25);padding:8px">📜 History</button>
+<button onclick="logout()" style="background:rgba(0,0,0,.25);padding:8px">Logout</button>
+</div>
+</div>
+
+<!-- PRODUCT ADD WITH FULL DETAIL -->
+<div class="card" id="addBox" style="display:none;border:2px solid #27ae60">
+<h3>📦 Product Add - Full Detail</h3>
+<input id="p_name" placeholder="Product Name - نام">
+<input id="p_price" type="number" placeholder="Price - قیمت مثلا 1600" oninput="calc()">
+<p id="p_calc" style="font-size:12px;color:#e67e22;font-weight:600"></p>
+<input id="p_cat" placeholder="Category - مثلا Watch, Earbuds">
+<input id="p_stock" type="number" placeholder="Stock - تعداد">
+<input id="p_img" placeholder="Image Link - تصویر کا لنک">
+<textarea id="p_desc" placeholder="Full Description - مکمل تفصیل" rows="2"></textarea>
+<button class="btn-green" onclick="addProduct()">Product Add + Detail Save</button>
+<div class="detail-box">Seller Detail Auto Save ہوگا: Name, Phone, JazzCash, 200 Commission, 1400 Earn</div>
+</div>
+
+<!-- ADMIN WITH FULL DETAIL -->
+<div class="card" id="adminBox" style="display:none;border:2px solid #e67e22">
+<h3>🔐 Admin Panel - Full Detail</h3>
+<div class="detail-box">Admin کو Buyer کا پیسہ آتا ہے، پھر Seller کو 1400 JazzCash پر بھیجنا ہوتا ہے</div>
+<button class="btn-orange" onclick="loadAdmin()">Admin Orders + Full Detail دیکھیں</button>
+<button class="btn-dark" onclick="loadAllUsers()">All Users Detail دیکھیں</button>
+<div id="adminData"></div>
+</div>
+
+<div id="products"></div>
+<div id="history"></div>
+</div>
+
+<!-- WITHDRAW WITH FULL DETAIL -->
+<div id="withdrawBox"><div class="inner">
+<h3>💸 Withdrawal - Full Detail</h3>
+<div class="detail-box">
+Name: <b id="w_name">-</b><br>Phone: <b id="w_phone">-</b><br>JazzCash: <b id="w_jazz_show">-</b><br>Balance: <b id="w_bal">0</b> Rs
+</div>
+<input id="w_amount" type="number" placeholder="Amount - رقم کم از کم 500">
+<select id="w_method"><option>JazzCash</option><option>Easypaisa</option><option>Bank</option></select>
+<input id="w_acc" placeholder="JazzCash Account Number - نمبر">
+<textarea id="w_note" placeholder="Note - نوٹ (اختیاری)" rows="2"></textarea>
+<button class="btn-green" onclick="doWithdraw()">Withdraw Request بھیجیں</button>
+<button class="btn-red" onclick="closeWithdraw()">بند کریں</button>
+<p id="w_status" style="text-align:center;font-size:12px"></p>
+</div></div>
+
+<div class="bottom-nav" id="bottomNav" style="display:none"><div onclick="window.scrollTo(0,0)">🏠<br>Home</div><div onclick="products.scrollIntoView()">📦<br>Detail</div><div onclick="openWithdraw()">💸<br>Withdraw</div><div onclick="logout()">👤<br>Account</div></div>
 
 <script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";import{getFirestore,collection,addDoc,getDocs,query,where,doc,updateDoc}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const firebaseConfig={apiKey:"AIzaSyAW_HtbK9Z5MRQ7oXKLBT1GEANDypg_QQ",authDomain:"umariltafstore23.firebaseapp.com",projectId:"umariltafstore23",storageBucket:"umariltafstore23.firebasestorage.app",messagingSenderId:"30207962925",appId:"1:30207962925:web:444d1ba54d3b8819f343c4"};
+const app=initializeApp(firebaseConfig);const db=getFirestore(app);
+let cur=null,curId=null;
+const authSection=document.getElementById('authSection'),storeSection=document.getElementById('storeSection'),bottomNav=document.getElementById('bottomNav');
+function check(){const p=localStorage.getItem('userPhone');if(p){authSection.style.display='none';storeSection.style.display='block';bottomNav.style.display='flex';init(p)}}check();
+window.toggleAuth=()=>{document.getElementById('signupForm').classList.toggle('hidden');document.getElementById('loginForm').classList.toggle('hidden')};
+window.calc=()=>{const pr=parseInt(document.getElementById('p_price').value)||0;if(pr>0)document.getElementById('p_calc').innerText=`Full Detail: Price ${pr} | Store Commission 200 | Seller Earn ${pr-200} | Seller JazzCash پر جائے گا`};
+window.signUp=async()=>{
+ const name=s_name.value.trim(),phone=s_phone.value.trim(),jazz=s_jazz.value.trim(),pass=s_pass.value.trim(),role=s_role.value;
+ if(!name||!phone||!jazz||!pass){status.innerText='ساری Detail لازمی: Name, Phone, JazzCash, Password';return}
+ await addDoc(collection(db,"users"),{name,phone,jazzcash:jazz,password:pass,role,balance:0,totalEarn:0,totalWithdraw:0,createdAt:new Date().toISOString()});
+ status.style.color='green';status.innerText='Account بن گیا! Full Detail Save ہو گئی';toggleAuth();
+};
+window.doLogin=async()=>{const phone=l_phone.value.trim(),pass=l_pass.value.trim();const q=query(collection(db,"users"),where("phone","==",phone),where("password","==",pass));const snap=await getDocs(q);if(!snap.empty){localStorage.setItem('userPhone',phone);location.reload()}else{status.innerText='غلط فون/پاس ورڈ'}};
+
+async function init(phone){
+ const q=query(collection(db,"users"),where("phone","==",phone));const snap=await getDocs(q);
+ if(!snap.empty){cur=snap.docs[0].data();curId=snap.docs[0].id;
+  d_name.innerText=cur.name;d_phone.innerText=cur.phone;d_jazz.innerText=cur.jazzcash;d_role.innerText=cur.role;d_balance.innerText=cur.balance||0;d_total.innerText=cur.totalEarn||0;
+  if(cur.role!=='buyer')addBox.style.display='block';if(cur.role==='admin')adminBox.style.display='block';
+ }loadProducts();
+}
+
+window.addProduct=async()=>{
+ const name=p_name.value.trim(),price=parseInt(p_price.value),cat=p_cat.value.trim(),stock=p_stock.value.trim(),img=p_img.value.trim()||'https://via.placeholder.com/300x200?text=Product',desc=p_desc.value.trim();
+ if(!name||!price)return alert('Name Price لازمی');
+ const data={name,price,category:cat,stock:stock||'1',image:img,description:desc,commission:200,sellerEarn:price-200,sellerName:cur.name,sellerPhone:cur.phone,sellerJazz:cur.jazzcash,addedBy:cur.phone,createdAt:new Date().toISOString()};
+ await addDoc(collection(db,"products"),data);alert(`Product Added Full Detail!\nPrice ${price}\nCommission 200\nSeller Earn ${price-200}\nSeller Jazz ${cur.jazzcash}\nCategory ${cat}`);location.reload();
+};
+
+async function loadProducts(){
+ const snap=await getDocs(collection(db,"products"));let html='';
+ snap.forEach(d=>{const p=d.data();html+=`
+ <div class="card">
+ <img src="${p.image}" style="width:100%;border-radius:10px;max-height:200px;object-fit:cover">
+ <h3 style="margin:5px 0">${p.name} <span class="badge badge-red">Store Cut 200</span> <span class="badge badge-green">Seller ${p.sellerEarn}</span></h3>
+ <div class="detail-box">
+ <b>Full Product Detail:</b><br>
+ Price: ${p.price} Rs | Category: ${p.category||'-'} | Stock: ${p.stock||'-'}<br>
+ Description: ${p.description||'-'}<br>
+ Seller Name: ${p.sellerName} | Phone: ${p.sellerPhone}<br>
+ Seller JazzCash: <b>${p.sellerJazz}</b><br>
+ Commission: 200 | Earn: ${p.sellerEarn}
+ </div>
+ <button onclick="buyNow('${d.id}','${p.name}',${p.price},'${p.sellerPhone}','${p.sellerName}','${p.sellerJazz}','${p.image}')">Buy Now ${p.price} Rs - Full Detail Order</button>
+ </div>`});
+ document.getElementById('products').innerHTML=html||'<p style="text-align:center">کوئی Product نہیں</p>';
+}
+
+window.buyNow=async(id,name,price,sellerPhone,sellerName,sellerJazz,img)=>{
+ if(!confirm(`Full Order Detail Confirm?\nProduct: ${name}\nPrice: ${price}\nStore Commission: 200\nSeller Earn: ${price-200}\nSeller: ${sellerName} (${sellerPhone})\nSeller JazzCash: ${sellerJazz}\nBuyer: ${cur.name} (${cur.phone})\nBuyer JazzCash: ${cur.jazzcash}\n\nپیسہ پہلے Admin کو جائے گا`))return;
+ await addDoc(collection(db,"orders"),{productId:id,productName:name,productImage:img,price,commission:200,sellerEarn:price-200,buyerName:cur.name,buyerPhone:cur.phone,buyerJazz:cur.jazzcash,sellerName,sellerPhone,sellerJazz,status:'paid_to_admin',createdAt:new Date().toISOString()});
+ alert('Order Full Detail کے ساتھ Admin کو گیا! Admin اب Seller کو 1400 JazzCash پر بھیجے گا');
+};
+
+window.loadAdmin=async()=>{
+ const snap=await getDocs(collection(db,"orders"));let html='<h3>Admin Orders Full Detail</h3>';
+ snap.forEach(d=>{const o=d.data();if(o.status==='paid_to_admin'){html+=`<div class="card" style="border-left:5px solid orange"><b>Product:</b> ${o.productName} (${o.price}Rs)<br><b>Price Detail:</b> ${o.price} - 200 = ${o.sellerEarn}<br><b>Buyer Detail:</b> ${o.buyerName} | ${o.buyerPhone} | JazzCash ${o.buyerJazz}<br><b>Seller Detail:</b> ${o.sellerName} | ${o.sellerPhone} | JazzCash <b>${o.sellerJazz}</b><br><b>Status:</b> ${o.status} | Date: ${new Date(o.createdAt).toLocaleString()}<br><button class="btn-orange" onclick="paySeller('${d.id}','${o.sellerPhone}',${o.sellerEarn})">${o.sellerEarn} Rs Seller ${o.sellerJazz} پر بھیجیں</button></div>`}});
+ document.getElementById('adminData').innerHTML=html||'کوئی نیا Order نہیں';
+};
+
+window.loadAllUsers=async()=>{
+ const snap=await getDocs(collection(db,"users"));let html='<h3>All Users Full Detail</h3>';
+ snap.forEach(d=>{const u=d.data();html+=`<div class="detail-box">Name:${u.name} | Phone:${u.phone} | JazzCash:${u.jazzcash} | Role:${u.role} | Balance:${u.balance} | Earn:${u.totalEarn||0}</div>`});
+ document.getElementById('adminData').innerHTML=html;
+};
+
+window.paySeller=async(orderId,sellerPhone,earn)=>{
+ if(!confirm(`${earn} Rs Seller ${sellerPhone} کو JazzCash پر بھیج دیے؟`))return;
+ const q=query(collection(db,"users"),where("phone","==",sellerPhone));const snap=await getDocs(q);
+ if(!snap.empty){const s=snap.docs[0];const sd=s.data();await updateDoc(doc(db,"users",s.id),{balance:(sd.balance||0)+earn,totalEarn:(sd.totalEarn||0)+earn});await updateDoc(doc(db,"orders",orderId),{status:'paid_to_seller',paidAt:new Date().toISOString()});alert(`بھیج دیا! ${earn} Rs Seller کے JazzCash Detail پر Balance میں جمع`);loadAdmin();}
+};
+
+window.openWithdraw=()=>{withdrawBox.style.display='flex';w_name.innerText=cur.name;w_phone.innerText=cur.phone;w_jazz_show.innerText=cur.jazzcash;w_bal.innerText=cur.balance;w_acc.value=cur.jazzcash;};
+window.closeWithdraw=()=>withdrawBox.style.display='none';
+window.doWithdraw=async()=>{
+ const amount=parseInt(w_amount.value),method=w_method.value,acc=w_acc.value,note=w_note.value;
+ if(!amount||!acc)return w_status.innerText='Amount اور JazzCash لازمی';if(amount<500)return w_status.innerText='کم از کم 500';if(amount>cur.balance)return w_status.innerText='بیلنس کم ہے';
+ w_status.innerText='Request بھیجی جا رہی Full Detail کے ساتھ...';
+ await addDoc(collection(db,"withdrawals"),{name:cur.name,phone:cur.phone,jazzcash:cur.jazzcash,amount,method,account:acc,note,status:'pending',createdAt:new Date().toISOString()});
+ await updateDoc(doc(db,"users",curId),{balance:cur.balance-amount,totalWithdraw:(cur.totalWithdraw||0)+amount});
+ w_status.style.color='green';w_status.innerText=`Request بھیج دی! ${amount} Rs آپ کے ${acc} JazzCash پر آئیں گے`;setTimeout(()=>{closeWithdraw();location.reload()},1200);
+};
+window.loadHistory=async()=>{
+ const q=query(collection(db,"withdrawals"),where("phone","==",localStorage.getItem('userPhone')));const snap=await getDocs(q);
+ let html='<div class="card"><h3>Withdrawal Full Detail History</h3>';if(snap.empty)html+='<p>کوئی نہیں</p>';
+ snap.forEach(d=>{const w=d.data();html+=`<div class="detail-box">Rs.${w.amount} | Method:${w.method} | Acc:${w.account} | JazzCash:${w.jazzcash} | Status:${w.status} | Date:${new Date(w.createdAt).toLocaleString()}</div>`});html+='</div>';
+ const q2=query(collection(db,"orders"),where("buyerPhone","==",localStorage.getItem('userPhone')));const snap2=await getDocs(q2);
+ html+='<div class="card"><h3>Orders Full Detail History</h3>';snap2.forEach(d=>{const o=d.data();html+=`<div class="detail-box">${o.productName} - ${o.price}Rs | Earn:${o.sellerEarn} | Seller:${o.sellerName} ${o.sellerJazz} | Status:${o.status}</div>`});html+='</div>';
+ history.innerHTML=html;history.scrollIntoView();
+};
+window.logout=()=>{localStorage.removeItem('userPhone');location.reload();};
+</script>
+</body>
+</html>
